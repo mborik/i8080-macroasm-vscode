@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="i8080-macroasm" Version="0.1.0" Publisher="mborik"/>
+    <DisplayName>i8080 Macro-Assembler</DisplayName>
+    <Description xml:space="preserve">Support for macro-assembler of Intel 8080/8085 in Visual Studio Code</Description>
+    <Tags>assembly,macro,assembler,Intel,i8080,8080,8085</Tags>
+    <Categories>Programming Languages</Categories>
+    <GalleryFlags>Public</GalleryFlags>
+    <License>extension/LICENSE</License>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+  </Installation>
+  <Dependencies/>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+    <Asset Type="Microsoft.VisualStudio.Services.Content.Details" Path="extension/README.md" Addressable="true" />
+    <Asset Type="Microsoft.VisualStudio.Services.Content.License" Path="extension/LICENSE" Addressable="true" />
+  </Assets>
+</PackageManifest>

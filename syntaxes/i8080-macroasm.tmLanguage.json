@@ -1,0 +1,208 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "i8080-macroasm",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#mnemonics"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#includes"
+		},
+		{
+			"include": "#labels"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.i8080asm",
+					"begin": ";",
+					"end": "\\n"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.i8080asm",
+					"match": "(?i:(?<=\\s)(?:equ|eval|f?org|end?t|align|(?:de|un)?phase|shift|save(?:bin|dev|hob|nex|sna|tap|trd)|empty(?:tap|trd)|inc(?:bin|hob|trd)|binclude|includelua|insert|binary|end|out(?:put|end)|tap(?:out|end)|fpos|fname|page|slot|size|opt|outradix)\\b)"
+				},
+				{
+					"name": "keyword.control.i8080asm",
+					"match": "(?i:(?<=\\s)(?:cpu|device|encoding|charset|proc|macro|local|shared|public|rept|e?dup|block|end[mpr]|exitm|module|endmod(?:ule)?|(?:un)?define|export|disp|textarea|map|mmu|field|defarray)\\b)"
+				},
+				{
+					"name": "keyword.control.i8080asm",
+					"match": "(?i:(?<=\\s)(?:assert|fatal|error|warning|message|display|print|fail|shellexec|def[bdghlmswir]|d[bcghmswz]|abyte[cz]?|byte|d?word|hex)\\b)"
+				},
+				{
+					"name": "keyword.control.i8080asm",
+					"match": "(?i:(?<=\\s)(?:if|ifn?def|ifn?used|else|elseif|endif)\\b)"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"match": "(?i:(af'))",
+					"captures": {
+						"1": {
+							"name": "support.type.register.i8080asm"
+						}
+					}
+				},
+				{
+					"name": "string.quoted.single.i8080asm",
+					"begin": "'",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.i8080asm"
+						}
+					},
+					"end": "(\\')|((?:[^\\\\\\n])$)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.i8080asm"
+						},
+						"2": {
+							"name": "invalid.illegal.newline.i8080asm"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#string-character-escape"
+						}
+					]
+				},
+				{
+					"name": "string.quoted.double.i8080asm",
+					"begin": "\"",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.i8080asm"
+						}
+					},
+					"end": "(\")|((?:[^\\\\\\n])$)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.i8080asm"
+						},
+						"2": {
+							"name": "invalid.illegal.newline.i8080asm"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#string-character-escape"
+						}
+					]
+				}
+			]
+		},
+		"string-character-escape": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.i8080asm",
+					"match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
+				}
+			]
+		},
+		"mnemonics": {
+			"patterns": [
+				{
+					"name": "support.type.flag.i8080asm",
+					"match": "\\b(?i:[jcr])(?i:([cmpz]|n[cz]|p[eo]))?\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.mnemonic.i8080asm"
+						},
+						"2": {
+							"name": "meta.preprocessor.flag.i8080asm"
+						}
+					}
+				},
+				{
+					"name": "constant.numeric.operator.i8080asm",
+					"match": "\\b(?i:high|low|not|mod|sh[lr])\\b"
+				},
+				{
+					"name": "keyword.mnemonic.i8080asm",
+					"match": "\\s(?i:a[cd]i|ad[cd]|an[ai]|call|c[cmpz]|cm[ac]|cn[cz]|cp[eo]|cmp|cpi|daa|dad|dc[rx]|[de]i|hlt|in[rx]?|jmp|j[cmpz]|cn[cz]|jp[eo]|ldax?|lhld|lxi|mov|mvi|nop|or[ai]|out|pchl|pop|push|ra[lr]|ret|r[cmpz]|rn[cz]|rp[eo]|r[lr]c|rst|sb[bi]|shld|sphl|stax?|stc|su[bi]|xchg|xr[ai]|xthl)\\s"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "invalid",
+					"match": "^\\{5}"
+				},
+				{
+					"name": "constant.numeric.integer.hexadecimal.i8080asm",
+					"match": "[\\$#][0-9a-fA-F]+"
+				},
+				{
+					"name": "constant.numeric.integer.hexadecimal.i8080asm",
+					"match": "(\\-?[0-9a-fA-F]+[hH])\\b"
+				},
+				{
+					"name": "constant.numeric.integer.binary.i8080asm",
+					"match": "%[01]+\\b"
+				},
+				{
+					"name": "constant.numeric.integer.binary.i8080asm",
+					"match": "\\b[01]+[bB]\\b"
+				},
+				{
+					"name": "constant.numeric.integer.decimal.i8080asm",
+					"match": "\\-?\\d+"
+				}
+			]
+		},
+		"includes": {
+			"patterns": [
+				{
+					"match": "(?i:(?<=\\s)(include)\\s+(([\"'])(?:[^\\3]+)\\3))",
+					"captures": {
+						"1": {
+							"name": "keyword.control.i8080asm"
+						},
+						"2": {
+							"name": "string.modifier.import.i8080asm"
+						}
+					}
+				}
+			]
+		},
+		"labels": {
+			"patterns": [
+				{
+					"match": "^\\@?((\\$\\$(?!\\.))?[\\w\\.]+):?(?=\\s)",
+					"captures": {
+						"1": {
+							"name": "entity.name.function.i8080asm"
+						}
+					}
+				},
+				{
+					"match": "\\b([a-zA-Z][\\w\\.]+)\\b",
+					"name": "variable.parameter.label.i8080asm"
+				}
+			]
+		}
+	},
+	"scopeName": "source.i8080asm"
+}

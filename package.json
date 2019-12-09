@@ -1,0 +1,97 @@
+{
+    "name": "i8080-macroasm",
+    "displayName": "Intel 8080 Macro-Assembler",
+    "description": "Support for macro-assembler of Intel 8080/8085 in Visual Studio Code",
+    "version": "0.1.0",
+    "icon": "logo.png",
+    "publisher": "mborik",
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "assembly",
+        "macro",
+        "assembler",
+        "Intel",
+        "i8080",
+        "8080",
+        "8085"
+    ],
+    "homepage": "https://github.com/mborik/i8080-macroasm-vscode",
+    "bugs": "https://github.com/mborik/i8080-macroasm-vscode/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mborik/i8080-macroasm-vscode.git"
+    },
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "activationEvents": [
+        "onLanguage:i8080-macroasm"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "problemMatchers": [
+            {
+                "name": "errmatcher-as",
+                "owner": "i8080-macroasm",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^> > >(.*)\\(([0-9]+)\\): (error|warning):\\s+(.*)(\\x1B\\[K)?$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 3,
+                        "message": 4
+                    }
+                ]
+            }
+        ],
+        "languages": [
+            {
+                "id": "i8080-macroasm",
+                "aliases": [
+                    "i8080 Macro-Assembler",
+                    "i8085 Macro-Assembler",
+                    "i8080-asm"
+                ],
+                "extensions": [
+                    ".a8080",
+                    ".asm",
+                    ".inc",
+                    ".s"
+                ],
+                "configuration": "./language.configuration.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "i8080-macroasm",
+                "path": "./snippets/i8080-macroasm.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "i8080-macroasm",
+                "scopeName": "source.i8080asm",
+                "path": "./syntaxes/i8080-macroasm.tmLanguage.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.14",
+        "typescript": "^3.7.3",
+        "vscode": "^1.1.36"
+    }
+}
