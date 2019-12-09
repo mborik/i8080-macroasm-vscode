@@ -37,7 +37,7 @@ export class ASMCompletionProposer implements vscode.CompletionItemProvider {
 		return result;
 	}
 
-	private instructionMapper(opt: EditorOptions, ucase: boolean, z80n: boolean, snippet: string) {
+	private instructionMapper(opt: EditorOptions, ucase: boolean, i8085: boolean, snippet: string) {
 		const delimiter = snippet.substr(-1);
 		snippet = uppercaseIfNeeded(snippet, ucase).trim();
 
@@ -62,8 +62,8 @@ export class ASMCompletionProposer implements vscode.CompletionItemProvider {
 		item.insertText = snip;
 		item.commitCharacters = ['\t'];
 
-		if (z80n) {
-			item.documentation = new vscode.MarkdownString('(Z80N)');
+		if (i8085) {
+			item.documentation = new vscode.MarkdownString('(8085)');
 			item.sortText = `z${snippet}`; // put on bottom...
 		}
 
@@ -103,7 +103,7 @@ export class ASMCompletionProposer implements vscode.CompletionItemProvider {
 
 			return [
 				...set.instructions.map(this.instructionMapper.bind(this, editorOptions, uc, false)),
-				...set.nextInstructions.map(this.instructionMapper.bind(this, editorOptions, uc, true))
+				...set.instructions8085.map(this.instructionMapper.bind(this, editorOptions, uc, true))
 			];
 		}
 
@@ -114,22 +114,7 @@ export class ASMCompletionProposer implements vscode.CompletionItemProvider {
 
 		if (shouldSuggest2ArgRegisterMatch) {
 			const uc = isFirstLetterUppercase(shouldSuggest2ArgRegisterMatch[1]);
-
-			if (shouldSuggest2ArgRegisterMatch[1].toLowerCase() === 'ex' &&
-				shouldSuggest2ArgRegisterMatch[2].toLowerCase() === 'af') {
-
-				const text = uppercaseIfNeeded("af'", uc);
-				const item = new vscode.CompletionItem(text, vscode.CompletionItemKind.Value);
-				item.insertText = new vscode.SnippetString(text)
-					.appendText(editorOptions.eol)
-					.appendTabstop(0);
-
-				item.commitCharacters = ['\n'];
-				return [item];
-			}
-			else {
-				output = set.registers.map(this.registerMapper.bind(this, editorOptions.eol, uc));
-			}
+			output = set.registers.map(this.registerMapper.bind(this, editorOptions.eol, uc));
 		}
 		else if (shouldSuggest1ArgRegisterMatch) {
 			const uc = isFirstLetterUppercase(shouldSuggest1ArgRegisterMatch[0]);

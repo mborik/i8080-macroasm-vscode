@@ -232,7 +232,6 @@ export class ASMSymbolDocumenter {
 
 			let lbFull = lbPart;
 			let lbParent: string | undefined = undefined;
-			let lbModule: string | undefined = undefined;
 
 			for (let lineNumber = position.line - 1; lineNumber >= 0; lineNumber--) {
 				let line = doc.lineAt(lineNumber);
@@ -245,14 +244,9 @@ export class ASMSymbolDocumenter {
 						lbParent = parentLabelMatch[1];
 					}
 				}
-				const moduleLineMatch = line.text.match(regex.moduleLine);
-				if (moduleLineMatch) {
-					lbModule = moduleLineMatch[1];
-					break;
-				}
 			}
 
-			lbFull = this._enlargeLabel(this._enlargeLabel(lbFull, lbParent), lbModule);
+			lbFull = this._enlargeLabel(lbFull, lbParent);
 
 			const symbols = this.symbols(doc);
 			const symbol = symbols[lbFull] || symbols[lbPart];
@@ -288,7 +282,6 @@ export class ASMSymbolDocumenter {
 		const table = new FileTable();
 		this.files[document.uri.fsPath] = table;
 
-		let moduleStack: string[] = [];
 		let commentBuffer: string[] = [];
 		let lastFullLabel: string | null = null;
 
@@ -310,7 +303,6 @@ export class ASMSymbolDocumenter {
 			}
 			else {
 				const includeLineMatch = regex.includeLine.exec(line.text);
-				const moduleLineMatch = regex.moduleLine.exec(line.text);
 				const macroLineMatch = regex.macroLine.exec(line.text);
 				const labelMatch = regex.labelDefinition.exec(line.text);
 				let labelPath = [];
@@ -327,11 +319,6 @@ export class ASMSymbolDocumenter {
 					}
 					else if (declaration.indexOf('$$') < 0) {
 						lastFullLabel = declaration;
-					}
-
-					if (moduleStack.length && labelMatch[0][0] !== '@') {
-						labelPath.unshift(moduleStack[0]);
-						declaration = `${moduleStack[0]}.${declaration}`;
 					}
 
 					const location = new vscode.Location(document.uri, line.range.start);
@@ -360,7 +347,7 @@ export class ASMSymbolDocumenter {
 					));
 				}
 
-				const pathFragment = [  ...moduleStack.slice(0, 1), ...labelPath.slice(-1) ];
+				const pathFragment = [  ...labelPath.slice(-1) ];
 
 				if (includeLineMatch) {
 					const filename = includeLineMatch[4];
@@ -384,16 +371,16 @@ export class ASMSymbolDocumenter {
 						lineNumber
 					));
 				}
-				else if (macroLineMatch) {
-					const declaration = macroLineMatch[1];
+				else if (macroLineMatch && labelMatch) {
+					const declaration = labelMatch[1];
 					const location = new vscode.Location(document.uri, line.range.start);
 					const endCommentMatch = regex.endComment.exec(line.text);
 					if (endCommentMatch) {
 						commentBuffer.unshift(endCommentMatch[1].trim());
 					}
 
-					if (macroLineMatch[2]) {
-						commentBuffer.unshift("\`" + macroLineMatch[2].trim() + "`\n");
+					if (macroLineMatch[1]) {
+						commentBuffer.unshift("\`" + macroLineMatch[1].trim() + "`\n");
 					}
 
 					commentBuffer.unshift(`**macro ${declaration}**`);
@@ -406,12 +393,6 @@ export class ASMSymbolDocumenter {
 						lineNumber,
 						commentBuffer.join("\n").trim()
 					));
-				}
-				else if (moduleLineMatch) {
-					moduleStack.unshift(moduleLineMatch[1]);
-				}
-				else if (regex.endmoduleRule.test(line.text)) {
-					moduleStack.shift();
 				}
 
 				commentBuffer = [];
