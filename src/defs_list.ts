@@ -19,10 +19,8 @@ export default {
 	],
 	registers: [
 		/*  0 */ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'm',
-		/*  8 */ 'h', 'd', 'b', 'psw',
-		/* 12 */ 'sp'
+		/*  8 */ 'h', 'd', 'b', 'psw', 'sp'
 	],
-	// quick pointers into `registers`
-	regR16Index: 8,
-	regStackIndex: 12,
+	// quick pointer into `registers`
+	regR16Index: 8
 }

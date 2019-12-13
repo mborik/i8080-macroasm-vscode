@@ -118,14 +118,11 @@ export class ASMCompletionProposer implements vscode.CompletionItemProvider {
 		}
 		else if (shouldSuggest1ArgRegisterMatch) {
 			const uc = isFirstLetterUppercase(shouldSuggest1ArgRegisterMatch[0]);
-			let idxStart = 0, idxEnd = undefined;
+			let idxStart = 0, idxEnd: number | undefined = set.regR16Index;
 
 			if (shouldSuggest1ArgRegisterMatch[1]) {
 				idxStart = set.regR16Index;
-				idxEnd = set.regStackIndex;
-			}
-			else if (shouldSuggest1ArgRegisterMatch[2]) {
-				idxEnd = set.regR16Index;
+				idxEnd = undefined;
 			}
 
 			output = set.registers.slice(idxStart, idxEnd).map(

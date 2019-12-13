@@ -119,18 +119,6 @@
 		"mnemonics": {
 			"patterns": [
 				{
-					"name": "meta.preprocessor.flag.i8080asm",
-					"match": "\\b(?i:([jcr])([cmpz]|n[cz]|p[eo]))\\b",
-					"captures": {
-						"1": {
-							"name": "keyword.mnemonic.i8080asm"
-						},
-						"2": {
-							"name": "meta.preprocessor.flag.i8080asm"
-						}
-					}
-				},
-				{
 					"name": "support.type.flag.z80asm",
 					"match": "\\b(?i:cpu)(?:\\s+(?i:(8080|8085UNDOC)))\\b",
 					"captures": {
@@ -152,7 +140,7 @@
 				},
 				{
 					"name": "keyword.mnemonic.i8080asm",
-					"match": "\\s(?i:a[cd]i|ad[cd]|an[ai]|call|cmp|cpi|daa|dad|dc[rx]|[de]i|hlt|in[rx]?|jmp|ldax?|lhld|lxi|mov|mvi|nop|or[ai]|out|pchl|pop|push|ra[lr]|ret|r[lr]c|rst|sb[bi]|shld|sphl|stax?|stc|su[bi]|xchg|xr[ai]|xthl)\\s"
+					"match": "\\s(?i:a[cd]i|ad[cd]|an[ai]|[cjr]([cmpz]|n[cz]|p[eo])|call|cmp|cpi|daa|dad|dc[rx]|[de]i|hlt|in[rx]?|jmp|ldax?|lhld|lxi|mov|mvi|nop|or[ai]|out|pchl|pop|push|ra[lr]|ret|r[lr]c|rst|sb[bi]|shld|sphl|stax?|stc|su[bi]|xchg|xr[ai]|xthl)\\s"
 				},
 				{
 					"name": "keyword.mnemonic.i8080asm",
@@ -172,7 +160,7 @@
 				},
 				{
 					"name": "constant.numeric.integer.hexadecimal.i8080asm",
-					"match": "[\\$#][0-9a-fA-F]+"
+					"match": "\\$[0-9a-fA-F]+\\b"
 				},
 				{
 					"name": "constant.numeric.integer.hexadecimal.i8080asm",

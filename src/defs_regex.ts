@@ -11,17 +11,16 @@ export default {
 	labelDefinition: /^\@?((\$\$(?!\.))?[\w\.]+)(?::|\s|$)/,
 	parentLabel: /^(((\@|\$\$)(?!\.))?\w[\w\.]*)(?::|\s|$)/,
 	evalExpression: /^\@?([\w\.]+)\:?\s+(equ|set)\s+(.+)(;.*)?$/i,
-	shouldSuggestInstruction: /^(\@?((\$\$(?!\.))?[\w\.]+)[:\s])?\s*(\w+)?(?!.+)$/,
+	shouldSuggestInstruction: /^(((\$\$(?!\.))?[\w\.]+):?)?\s+(\w+)?(?!.+)$/,
 	shouldSuggest1ArgRegister: mkRegex`
 		(?:
-			(pop|push|dad|ldax|lxi|stax)|
-			(cmp|cpi|sb[bi]|su[bi]|an[ai]|or[ai]|xr[ai])|
-			(mov|mvi|in[rx]|dc[rx]|a[cd]i|ad[cd])
+			(pop|push|dad|ldax|lxi|stax|inx|dcx)|
+			(ad[cd]|s[bu]b|ana|ora|xra|cmp|mov|mvi|inr|dcr)
 		)
-		\s+$`,
+		\s+([a-z]\w*)?$`,
 	shouldSuggest2ArgRegister: mkRegex`
 		(lxi|mvi|mov)
-		\s+(\w+)(,\s*?[^\n]*)$`,
+		\s+(\w+)(,\s*?[^\n$]*)$`,
 	defineExpression: mkRegex`
 		^\@?([\w\.]+)\:?\s+(
 			b?include|read|d[bdqstw]
