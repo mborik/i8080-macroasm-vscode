@@ -2,7 +2,7 @@
     "name": "i8080-macroasm",
     "displayName": "Intel 8080 Macro-Assembler",
     "description": "Support for macro-assembler of Intel 8080/8085 in Visual Studio Code",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "icon": "logo.png",
     "publisher": "mborik",
     "categories": [

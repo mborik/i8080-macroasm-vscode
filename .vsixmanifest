@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Language="en-US" Id="i8080-macroasm" Version="0.1.0" Publisher="mborik"/>
+    <Identity Language="en-US" Id="i8080-macroasm" Version="0.1.1" Publisher="mborik"/>
     <DisplayName>i8080 Macro-Assembler</DisplayName>
     <Description xml:space="preserve">Support for macro-assembler of Intel 8080/8085 in Visual Studio Code</Description>
     <Tags>assembly,macro,assembler,Intel,i8080,8080,8085</Tags>

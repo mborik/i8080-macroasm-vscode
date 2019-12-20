@@ -134,7 +134,15 @@ export class ASMSymbolDocumenter {
 	 */
 	symbols(context: vscode.TextDocument): SymbolMap {
 		const output: SymbolMap = {};
-		this._seekSymbols(context.uri.fsPath, output);
+		const searched: string[] = [];
+
+		this._seekSymbols(context.uri.fsPath, output, [], searched);
+
+		for (const fn in this.files) {
+			if (searched.length && !searched.includes(fn)) {
+				this._seekSymbols(fn, output, [], searched);
+			}
+		}
 
 		return output;
 	}
