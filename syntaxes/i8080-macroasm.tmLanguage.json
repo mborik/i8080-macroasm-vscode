@@ -140,7 +140,7 @@
 				},
 				{
 					"name": "keyword.mnemonic.i8080asm",
-					"match": "\\s(?i:a[cd]i|ad[cd]|an[ai]|[cjr]([cmpz]|n[cz]|p[eo])|call|cmp|cpi|daa|dad|dc[rx]|[de]i|hlt|in[rx]?|jmp|ldax?|lhld|lxi|mov|mvi|nop|or[ai]|out|pchl|pop|push|ra[lr]|ret|r[lr]c|rst|sb[bi]|shld|sphl|stax?|stc|su[bi]|xchg|xr[ai]|xthl)\\s"
+					"match": "\\s(?i:a[cd]i|ad[cd]|an[ai]|[cjr]([cmpz]|n[cz]|p[eo])|call|cm[acp]|cpi|daa|dad|dc[rx]|[de]i|hlt|in[rx]?|jmp|ldax?|lhld|lxi|mov|mvi|nop|or[ai]|out|pchl|pop|push|ra[lr]|ret|r[lr]c|rst|sb[bi]|shld|sphl|stax?|stc|su[bi]|xchg|xr[ai]|xthl)\\s"
 				},
 				{
 					"name": "keyword.mnemonic.i8080asm",
