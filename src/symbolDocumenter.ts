@@ -33,22 +33,20 @@ export class ASMSymbolDocumenter {
 
 	files: { [name: string]: FileTable } = {};
 
-
-	constructor() {
-		const fileGlobPattern = "**/*.{a80,asm,inc,s}";
+	constructor(public settings: vscode.WorkspaceConfiguration) {
 		const fileUriHandler = ((uri: vscode.Uri) => {
 			vscode.workspace.openTextDocument(uri).then(doc => this._document(doc));
 		});
 
 		vscode.workspace
-			.findFiles(fileGlobPattern)
+			.findFiles(settings.files.include, settings.files.exclude)
 			.then(files => files.forEach(fileUriHandler));
 
 		vscode.workspace.onDidChangeTextDocument(
 			(event: vscode.TextDocumentChangeEvent) => this._document(event.document)
 		);
 
-		this._watcher = vscode.workspace.createFileSystemWatcher(fileGlobPattern);
+		this._watcher = vscode.workspace.createFileSystemWatcher(settings.files.include);
 		this._watcher.onDidChange(fileUriHandler);
 		this._watcher.onDidCreate(fileUriHandler);
 		this._watcher.onDidDelete((uri) => {

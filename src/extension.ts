@@ -6,11 +6,13 @@ import { ASMDefinitionProvider } from './definitionProvider';
 import { ASMDocumentSymbolProvider, ASMWorkspaceSymbolProvider } from './symbolProvider';
 
 let symbolDocumenter: ASMSymbolDocumenter | undefined;
+export const EXTENSION_LANGUAGE_ID = 'i8080-macroasm';
 
 export function activate(ctx: vscode.ExtensionContext) {
-	const languageSelector: vscode.DocumentFilter = { language: "i8080-macroasm", scheme: "file" };
+	const languageSelector: vscode.DocumentFilter = { language: EXTENSION_LANGUAGE_ID, scheme: "file" };
+	const settings = vscode.workspace.getConfiguration(EXTENSION_LANGUAGE_ID);
 
-	symbolDocumenter = new ASMSymbolDocumenter();
+	symbolDocumenter = new ASMSymbolDocumenter(settings);
 
 	ctx.subscriptions.push(
 		vscode.languages.registerHoverProvider(languageSelector, new ASMHoverProvider(symbolDocumenter)),
